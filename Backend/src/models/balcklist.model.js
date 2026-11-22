@@ -12,5 +12,8 @@
     timestamps:true
 })
 
+// Tokens expire after 1 day anyway, so MongoDB auto-deletes blacklist entries after 1 day
+blacklistTokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 24 * 60 * 60 })
+
 const tokenBlacklistModel=mongoose.model("BlacklistToken",blacklistTokenSchema)
 module.exports=tokenBlacklistModel

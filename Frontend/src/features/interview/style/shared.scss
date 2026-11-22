@@ -1,0 +1,87 @@
+@use "../../../style/theme" as *;
+
+.shared {
+    min-height: 100vh;
+    background-color: $bg-page;
+    color: $text-primary;
+    font-family: $font-stack;
+
+    &__bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        height: $navbar-height;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0 1.75rem;
+        background-color: rgba($bg-card, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid $border-color;
+
+        a { text-decoration: none; }
+    }
+
+    &__brand {
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: $text-primary;
+        span { color: $accent; }
+    }
+
+    &__by {
+        margin-left: auto;
+        font-size: 0.83rem;
+        color: $text-muted;
+        strong { color: $text-primary; }
+    }
+
+    &__body {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    &__hero {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+        background-color: $bg-card;
+        border: 1px solid $border-color;
+        border-radius: 1rem;
+        padding: 1.75rem 2rem;
+
+        h1 { margin: 0.3rem 0; font-size: 1.6rem; color: $text-primary; }
+        .match-score { align-items: center; }
+        .match-score__sub { max-width: 140px; }
+    }
+
+    &__eyebrow { margin: 0; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: $accent; font-weight: 700; }
+    &__company { margin: 0; color: $accent-alt; font-size: 0.95rem; }
+    &__date { margin: 0.4rem 0 0; color: $text-muted; font-size: 0.8rem; }
+
+    &__card {
+        background-color: $bg-card;
+        border: 1px solid $border-color;
+        border-radius: 1rem;
+        padding: 1.5rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        h2 { margin: 0; font-size: 1.05rem; color: $text-primary; }
+        .skill-tag { text-decoration: none; cursor: pointer; }
+    }
+
+    &__tasks li { display: flex !important; }
+
+    @media (max-width: 640px) {
+        &__hero { flex-direction: column; align-items: flex-start; }
+        &__by { display: none; }
+        &__bar .btn { margin-left: auto; }
+    }
+}

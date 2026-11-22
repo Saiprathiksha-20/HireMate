@@ -1,0 +1,244 @@
+@use "sass:color";
+@use "../../../style/theme" as *;
+
+.dashboard {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    color: $text-primary;
+    font-family: $font-stack;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        h1 { font-size: 1.9rem; font-weight: 700; margin: 0 0 0.4rem; color: $text-primary; }
+        .highlight { color: $accent; }
+        p { margin: 0; color: $text-muted; font-size: 0.92rem; }
+        a { text-decoration: none; }
+    }
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+.stat-card {
+    background-color: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 0.85rem;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 3px;
+        background-color: $blue;
+    }
+
+    &--pink::before { background-color: $accent; }
+    &--purple::before { background-color: $purple; }
+    &--green::before { background-color: $good; }
+
+    &__label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: $text-muted; font-weight: 600; }
+    &__value { font-size: 1.75rem; font-weight: 800; color: $text-primary; line-height: 1.15; }
+    &__sub { font-size: 0.78rem; color: $text-muted; }
+}
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.dash-card {
+    background-color: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 0.85rem;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 1rem;
+
+        h2 { margin: 0; font-size: 1rem; font-weight: 700; color: $text-primary; }
+        > span { font-size: 0.78rem; color: $text-muted; }
+
+        &--tools { align-items: center; flex-wrap: wrap; }
+    }
+}
+
+.dash-muted {
+    margin: 0;
+    color: $text-muted;
+    font-size: 0.88rem;
+
+    &--small { font-size: 0.75rem; margin-top: auto; }
+}
+
+// chart
+.score-chart {
+    position: relative;
+
+    svg { width: 100%; height: auto; display: block; }
+
+    &__tip {
+        margin-top: 0.4rem;
+        font-size: 0.78rem;
+        color: $text-muted;
+
+        strong { color: $accent; }
+    }
+}
+
+// skill gap bars
+.gap-bars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+
+    li {
+        display: grid;
+        grid-template-columns: minmax(90px, 1.2fr) 2fr 24px;
+        align-items: center;
+        gap: 0.7rem;
+    }
+
+    &__name { font-size: 0.82rem; color: $text-primary; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    &__track {
+        height: 8px;
+        border-radius: 4px;
+        background-color: $bg-input;
+        overflow: hidden;
+
+        span { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, $medium, $accent); }
+    }
+
+    &__count { font-size: 0.78rem; color: $text-muted; text-align: right; }
+}
+
+// toolbar
+.dash-tools { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.dash-search, .dash-select {
+    background-color: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    color: $text-primary;
+    font-family: $font-stack;
+    font-size: 0.83rem;
+    outline: none;
+
+    &:focus { border-color: $accent; }
+}
+
+.dash-search { width: 260px; max-width: 100%; &::placeholder { color: $text-muted; } }
+
+// report list
+.report-table { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.report-row {
+    display: grid;
+    grid-template-columns: 58px 1fr 150px auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.6rem;
+    border: 1px solid $border-color;
+    background-color: $bg-panel;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+
+    &:hover { border-color: rgba($accent, 0.6); transform: translateX(2px); }
+
+    &__score {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 3px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.95rem;
+
+        small { font-size: 0.6rem; color: $text-muted; margin-top: 4px; }
+
+        &.score--high { border-color: $accent; }
+        &.score--mid { border-color: $medium; }
+        &.score--low { border-color: $attention; }
+    }
+
+    &__main {
+        min-width: 0;
+
+        h3 { margin: 0 0 0.2rem; font-size: 0.92rem; color: $text-primary; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        p { margin: 0; font-size: 0.78rem; color: $text-muted; }
+    }
+
+    &__company { color: $accent-alt; }
+
+    &__progress { display: flex; flex-direction: column; gap: 0.3rem; }
+    &__progress-label { font-size: 0.72rem; color: $text-muted; }
+    &__progress-track {
+        height: 6px;
+        border-radius: 3px;
+        background-color: $bg-input;
+        overflow: hidden;
+
+        span { display: block; height: 100%; background: linear-gradient(90deg, $accent, $good); }
+    }
+
+    &__actions { display: flex; gap: 0.25rem; }
+
+    @media (max-width: 640px) {
+        grid-template-columns: 50px 1fr auto;
+        &__progress { display: none; }
+    }
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 0.45rem;
+    border: 1px solid transparent;
+    background: none;
+    color: $text-muted;
+    cursor: pointer;
+
+    &:hover { border-color: $border-color; color: $text-primary; background-color: $bg-card; }
+    &--danger:hover { color: $attention; border-color: rgba($attention, 0.4); }
+}

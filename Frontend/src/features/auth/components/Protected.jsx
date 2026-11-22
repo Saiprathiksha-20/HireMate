@@ -1,6 +1,5 @@
 import {useAuth} from "../hooks/useAuth";
 import {Navigate} from "react-router";
-import React from 'react'
 
 const Protected=({children}) => {
     const {loading,user}=useAuth()
@@ -9,10 +8,10 @@ const Protected=({children}) => {
 
 
     if(loading){
-        return (<main><h1>Loading...</h1></main>)
+        return (<main className='loading-screen' style={{ minHeight: '100vh' }}><span className='spinner spinner--large' /></main>)
     }
     if(!user){
-     return <Navigate to={"/Login"} />
+     return <Navigate to={"/login"} replace />
 
     }
     return children

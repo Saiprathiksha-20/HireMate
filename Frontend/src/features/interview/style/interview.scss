@@ -10,9 +10,9 @@ $accent: #ff2d78;
 $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 @use "sass:color";
 // severity palette
-$severity-high: #ff4d4d;
-$severity-medium: #f5a623;
-$severity-low: #3fb950;
+$severity-high: #ff2d78;   // hot pink  (was red)
+$severity-medium: #ff8fb8; // soft pink (was yellow)
+$severity-low: #e6edf3;    // violet    (was green)
 
 *::-webkit-scrollbar {
     display: none;
@@ -249,15 +249,15 @@ $severity-low: #3fb950;
         width: fit-content;
 
         &--intention {
-            color: #a78bfa;
-            background-color: rgba(#a78bfa, 0.1);
-            border: 1px solid rgba(#a78bfa, 0.2);
+            color:#e6edf3;
+            background-color: rgba(#e6edf3, 0.1);
+            border: 1px solid rgba(#e6edf3, 0.2);
         }
 
         &--answer {
-            color: #3fb950;
-            background-color: rgba(#3fb950, 0.1);
-            border: 1px solid rgba(#3fb950, 0.2);
+            color: #ff6b9d;
+            background-color: rgba(#ff6b9d, 0.1);
+            border: 1px solid rgba(#ff6b9d, 0.2);
         }
     }
 }
@@ -396,7 +396,7 @@ $severity-low: #3fb950;
         border: 4px solid;
 
         &.score--high {
-            border-color: $severity-low;
+            border-color: $accent;
         }
 
         &.score--mid {

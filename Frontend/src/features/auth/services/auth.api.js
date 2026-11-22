@@ -1,10 +1,4 @@
-import axios from "axios"
-
-
-const api=axios.create({
-    baseURL:"http://localhost:3000",
-    withCredentials:true
-})
+import { api } from "../../../lib/api"
 
 export async function register({username,email,password}){
      
@@ -63,3 +57,15 @@ catch(error){
   throw error
 }
 }
+
+
+// ═════════════════════════════ NEW ═════════════════════════════
+
+export const updateProfile = async ({ username, email }) =>
+    (await api.patch("/api/auth/profile", { username, email })).data
+
+export const changePassword = async ({ currentPassword, newPassword }) =>
+    (await api.patch("/api/auth/change-password", { currentPassword, newPassword })).data
+
+export const deleteAccount = async ({ password }) =>
+    (await api.delete("/api/auth/account", { data: { password } })).data
