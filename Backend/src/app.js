@@ -13,8 +13,18 @@ const app=express()
 app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }))
 app.use(express.json({ limit: "1mb" }))
 app.use(cookieParser())
+// Render / Railway etc. sit behind a proxy: needed for correct user IPs (rate limiting)
+if(process.env.NODE_ENV==="production"){
+    app.set("trust proxy",1)
+}
+
+// CLIENT_URL can be one URL or several separated by commas
+// e.g. CLIENT_URL=https://hiremate.vercel.app,http://localhost:5173
+const allowedOrigins=(process.env.CLIENT_URL || "http://localhost:5173")
+    .split(",").map(o=>o.trim().replace(/\/$/,"")).filter(Boolean)
+
 app.use(cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: allowedOrigins,
     credentials:true
 }))
 

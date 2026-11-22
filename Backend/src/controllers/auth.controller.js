@@ -8,14 +8,19 @@ const interviewReportModel=require("../models/interviewReport.model")
 /**
  * Cookie settings used for the auth token.
  * - httpOnly: JavaScript in the browser can't read the token (protects against XSS token theft)
- * - sameSite "lax": localhost:5173 -> localhost:3000 is still "same site", so the frontend keeps working
- * - secure: only turned on in production (https). On localhost / Postman it stays off.
+ * - Locally (localhost:5173 -> localhost:3000) the frontend and backend are the "same site", so sameSite "lax" works.
+ * - In production the frontend (vercel.app) and backend (onrender.com) are DIFFERENT sites,
+ *   so the browser only sends the cookie if it is sameSite "none" + secure (https).
  * - maxAge: 1 day, same as the JWT expiry
  */
-const cookieOptions={
+const isProduction=process.env.NODE_ENV==="production"
+const clearCookieOptions={
     httpOnly:true,
-    sameSite:"lax",
-    secure:process.env.NODE_ENV==="production",
+    sameSite:isProduction ? "none" : "lax",
+    secure:isProduction,
+}
+const cookieOptions={
+    ...clearCookieOptions,
     maxAge:24*60*60*1000
 }
 
@@ -93,7 +98,7 @@ async function logoutUserController(req,res){
     if(token){
         await tokenBlacklistModel.create({token})
     }
-    res.clearCookie("token",{httpOnly:true, sameSite:"lax", secure:cookieOptions.secure})
+    res.clearCookie("token",clearCookieOptions)
     res.status(200).json({message:"Logout successful"})
 }
 
@@ -205,7 +210,7 @@ async function deleteAccountController(req,res){
     if(req.cookies.token){
         await tokenBlacklistModel.create({token:req.cookies.token})
     }
-    res.clearCookie("token",{httpOnly:true, sameSite:"lax", secure:cookieOptions.secure})
+    res.clearCookie("token",clearCookieOptions)
     res.status(200).json({message:"Account deleted successfully"})
 }
 

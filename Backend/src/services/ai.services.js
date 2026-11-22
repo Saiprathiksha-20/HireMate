@@ -130,7 +130,10 @@ Job Description: ${jobDescription}
 
 
 async function generatePdfFromHtml(htmlContent){
-    const browser=await puppeteer.launch()
+    // these flags are needed on Linux servers like Render (no sandbox, small /dev/shm)
+    const browser=await puppeteer.launch({
+        args:["--no-sandbox","--disable-setuid-sandbox","--disable-dev-shm-usage"]
+    })
     try{
         const page=await browser.newPage();
         await page.setContent(htmlContent, {waitUntil: "networkidle0"})
